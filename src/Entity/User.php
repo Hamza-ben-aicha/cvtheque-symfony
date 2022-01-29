@@ -25,6 +25,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $firstName;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $lastName;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $phoneNumber;
+
+    #[ORM\OneToOne(targetEntity: GeneratedCv::class, cascade: ['persist', 'remove'])]
+    private $generatedCv;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,5 +105,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getGeneratedCv(): ?GeneratedCv
+    {
+        return $this->generatedCv;
+    }
+
+    public function setGeneratedCv(?GeneratedCv $generatedCv): self
+    {
+        $this->generatedCv = $generatedCv;
+
+        return $this;
     }
 }

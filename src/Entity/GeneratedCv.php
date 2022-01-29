@@ -24,10 +24,14 @@ class GeneratedCv
     #[ORM\OneToMany(mappedBy: 'generatedCv', targetEntity: WorkExperience::class)]
     private $workExperiences;
 
+    #[ORM\ManyToMany(targetEntity: Skills::class, inversedBy: 'generatedCvs')]
+    private $skills;
+
     public function __construct()
     {
         $this->educations = new ArrayCollection();
         $this->workExperiences = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,6 +107,30 @@ class GeneratedCv
                 $workExperience->setGeneratedCv(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Skills[]
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skills $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills[] = $skill;
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skills $skill): self
+    {
+        $this->skills->removeElement($skill);
 
         return $this;
     }
